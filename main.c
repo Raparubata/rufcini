@@ -51,6 +51,11 @@ int main(int argc, char** argv)
     term_t* new = table__run_division(term, magic);
 
     aterm = new;
+    while (!term__is_null(aterm))
+    {
+        ++aterm; 
+    }
+    --aterm;
     printf("(x%+lld)(", -magic);
     do
     {
@@ -66,8 +71,7 @@ int main(int argc, char** argv)
             if (aterm->coeff != 0) printf("^%d", aterm->power);
         }
 
-        ++aterm;
-    } while (!term__is_null(aterm));
+    } while ((aterm--)->power != 0);
     printf(")\n");
     free(term);
     free(new);

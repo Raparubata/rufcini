@@ -19,7 +19,7 @@ term_t* table__run_division(term_t* term, v64 magic)
         term_t* c_term = &term[current];
         sum = c_term->coeff + product;
         product = sum * magic;
-        term_t* c_new = &new[highest-current];
+        term_t* c_new = &new[current-1];
         c_new->coeff = sum;
         c_new->power = current-1;
     }
