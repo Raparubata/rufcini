@@ -2,23 +2,23 @@
 #include <math.h>
 #include <stdio.h>
 
-v64 magic__find(term_t* term)
+v64 magic__find(term_vec_t* vec)
 {
-    bool positive = (term[0].coeff > 0);
-    v64 i = -(term[0].coeff);
+    bool positive = (vec->terms[0] > 0);
+    v64 i = -(vec->terms[0]);
     while (true)
     {
-        if (term[0].coeff %i == 0)
+        if (vec->terms[0] %i == 0)
         {
             v64 accumulator = 0;
             
-            for (term_t* e = &term[0]; !term__is_null(e); ++e)
-                accumulator += (v64)(e->coeff * (v64)pow((double)i, (double)e->power));
+            for (u16 e = 0; e < vec->len; ++e)
+                accumulator += (v64)(vec->terms[e] * (v64)pow((double)i, (double)e));
             
             if (accumulator == 0)
                 return i;
         }
-        if (i == term[0].coeff) break;
+        if (i == vec->terms[0]) break;
         if (positive) ++i;
         else --i;
     }
