@@ -18,9 +18,14 @@ v64 magic__find(term_vec_t* vec)
             if (accumulator == 0)
                 return i;
         }
-        if (i == vec->terms[0]) break;
-        if (positive) ++i;
-        else --i;
+        if (i == vec->terms[0]) 
+            break;
+
+        if (positive)
+            ++i;
+            
+        else 
+            --i;
     }
     return 0;
 }
