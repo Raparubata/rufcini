@@ -6,7 +6,6 @@
 
 int main(int argc, char** argv)
 {
-    printf("parsing argv...\n");
     term_vec_t* vec = input__parse_args(argc, argv);
     if (!vec)
     {
