@@ -3,13 +3,13 @@
 
 #include <intdef.h>
 
-typedef struct _term
+typedef struct _term_vec
 {
-    u8 power;
-    v32 coeff;
-} term_t;
+    u32 len;
+    v64* terms;
+} term_vec_t;
 
-bool term__is_null(term_t* term);
-void term__print_coeff(term_t* term);
+void term__print_terms(term_vec_t* vec);
+void term__free_vec(term_vec_t* vec);
 
 #endif

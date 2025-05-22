@@ -1,24 +1,50 @@
 #include "term.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-bool term__is_null(term_t* term)
+void print_coeff(v64 term)
 {
-    return (term->coeff == 0 && term->power == 0);
-}
-
-void term__print_coeff(term_t *term)
-{
-    if (term->coeff == 1)
+    if (term == 1)
         printf("+x");
 
-    else if (term->coeff == -1)
+    else if (term == -1)
         printf("-x");
 
-    else if (term->coeff == 0)
+    else if (term == 0)
         return;
     
     else
-        printf("%+dx", term->coeff);
+        printf("%+lldx", term);
 
+    return;
+}
+
+
+void term__print_terms(term_vec_t* vec)
+{
+    v64 count = vec->len-1;
+    v64* term = vec->terms;
+    while (count >= 0)
+    {
+        if (count == 1)
+            print_coeff(term[count]);
+
+        else if (count == 0)
+            printf("%+lld", term[count]);
+
+        else
+        {
+            print_coeff(term[count]);
+            if (term[count] != 0) printf("^%lld", count);
+        }
+        --count;
+    }
+    return;
+}
+
+void term__free_vec(term_vec_t* vec)
+{
+    free(vec->terms);
+    free(vec);
     return;
 }
