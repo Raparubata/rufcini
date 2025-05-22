@@ -25,7 +25,7 @@ term_vec_t* table__run_division(term_vec_t* vec, v64 magic)
     if (vec->terms[0] + product != 0)
     {
         free(new);
-        fprintf(stderr, "error: remainder of the division is %d, should be 0\n", vec->terms[0] + product);
+        fprintf(stderr, "error: remainder of the division is %lld, should be 0\n", vec->terms[0] + product);
         return NULL;
     }
     else
