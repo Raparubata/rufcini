@@ -35,5 +35,6 @@ int main(int argc, char** argv)
     term__print_terms(new);
     printf(")\n");
     term__free_vec(vec);
+    term__free_vec(new);
     return 0;
 }
