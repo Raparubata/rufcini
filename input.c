@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-term_t* input__parse_args(int argc, char** argv)
+term_vec_t* input__parse_args(int argc, char** argv)
 {
-    term_t* term = calloc(argc, sizeof(term_t));
+    v64* term = (v64*)calloc(argc-1, sizeof(v64));
     if (!term)
     {
         perror("calloc()");
@@ -12,9 +12,17 @@ term_t* input__parse_args(int argc, char** argv)
     }
 
     for (u16 i = argc-1; i>=1; --i)
+        term[argc-1-i] = atoi(argv[i]);
+    
+    term_vec_t* vec = (term_vec_t*)malloc(sizeof(term_vec_t));
+    if (!vec)
     {
-        term[argc-1-i].power = argc-1-i;
-        term[argc-1-i].coeff = atoi(argv[i]);
+        perror("malloc()");
+        return NULL;
     }
-    return term;
+    
+    vec->len = argc-1;
+    vec->terms = term;
+
+    return vec;
 }
