@@ -6,41 +6,18 @@
 
 int main(int argc, char** argv)
 {
-    term_t* term = input__parse_args(argc, argv);
-    if (!term)
+    printf("parsing argv...\n");
+    term_vec_t* vec = input__parse_args(argc, argv);
+    if (!vec)
     {
         fprintf(stderr, "error: cannot allocate memory for command line arguments\n");
         return 1;
     }
 
-    term_t* aterm = term;
-    v64 count;
-    while (!term__is_null(aterm))
-    {
-        ++aterm; 
-        ++count;
-    }
-
-    --aterm;
-
-    do
-    {
-        if (aterm->power == 1)
-            term__print_coeff(aterm);
-
-        else if (aterm->power == 0)
-            printf("%+d", aterm->coeff);
-
-        else
-        {
-            term__print_coeff(aterm);
-            if (aterm->coeff != 0) printf("^%d", aterm->power);
-        }
-
-    } while ((aterm--)->power != 0);
+    term__print_terms(vec);
     printf("\n");
 
-    v64 magic = magic__find(term);
+    v64 magic = magic__find(vec);
     if (magic == 0)
     {
         fprintf(stderr, "error: cannot find magic number\n");
@@ -48,32 +25,16 @@ int main(int argc, char** argv)
     }
     printf("magic = %lld\n", magic);
     
-    term_t* new = table__run_division(term, magic);
-
-    aterm = new;
-    while (!term__is_null(aterm))
+    term_vec_t* new = table__run_division(vec, magic);
+    if (!new)
     {
-        ++aterm; 
+        fprintf(stderr, "error: cannot allocate memory to store the result\n");
+        return 1;
     }
-    --aterm;
+
     printf("(x%+lld)(", -magic);
-    do
-    {
-        if (aterm->power == 1)
-            term__print_coeff(aterm);
-
-        else if (aterm->power == 0)
-            printf("%+d", aterm->coeff);
-
-        else
-        {
-            term__print_coeff(aterm);
-            if (aterm->coeff != 0) printf("^%d", aterm->power);
-        }
-
-    } while ((aterm--)->power != 0);
+    term__print_terms(new);
     printf(")\n");
-    free(term);
-    free(new);
+    term__free_vec(vec);
     return 0;
 }

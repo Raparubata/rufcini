@@ -1,35 +1,44 @@
 #include "table.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-term_t* table__run_division(term_t* term, v64 magic)
+term_vec_t* table__run_division(term_vec_t* vec, v64 magic)
 {
     v64 sum = 0;
     v64 product = 0;
-    term_t* a = term;
-    v64 count = 0;
-    while (!term__is_null(a))
+    v64 highest = vec->len - 1;
+    v64* new = (v64*)calloc(highest, sizeof(v64));
+    if (!new)
     {
-        ++a; 
-        ++count;
+        perror("calloc()");
+        return NULL;
     }
-    v64 highest = count-1;
-    term_t* new = (term_t*)calloc(count, sizeof(term_t));
+
     for (u16 current = highest; current > 0; --current)
     {
-        term_t* c_term = &term[current];
-        sum = c_term->coeff + product;
+        v64* c_term = &vec->terms[current];
+        sum = *c_term + product;
         product = sum * magic;
-        term_t* c_new = &new[current-1];
-        c_new->coeff = sum;
-        c_new->power = current-1;
+        v64* c_new = &new[current-1];
+        *c_new = sum;
     }
-    if (term[0].coeff + product != 0)
+    if (vec->terms[0] + product != 0)
     {
         free(new);
+        fprintf(stderr, "error: remainder of the division is %d, should be 0\n", vec->terms[0] + product);
         return NULL;
     }
     else
     {
-        return new;
+        term_vec_t* new_vec = malloc(sizeof(term_vec_t));
+        if (!new_vec)
+        {
+            perror("malloc()");
+            free(new);
+            return NULL;
+        }
+        new_vec->len = highest;
+        new_vec->terms = new;
+        return new_vec;
     }
 }
