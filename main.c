@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     v64 magic = magic__find(vec);
     if (magic == 0)
     {
-        fprintf(stderr, "error: cannot find magic number\n");
+        fprintf(stderr, "error: cannot find magic number -- the polynomial has no rational roots\n");
         return 1;
     }
     printf("magic = %lld\n", magic);
