@@ -1,4 +1,4 @@
-name: Linux Build with GCC
+name: Linux build with GCC
 
 on:
   push:
