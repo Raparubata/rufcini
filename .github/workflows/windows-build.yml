@@ -27,6 +27,8 @@ jobs:
     - name: Add MSYS2 to PATH
       run: echo "C:\msys64\mingw64\bin" >> $GITHUB_PATH
 
-    - name: Compile
-      run: |
-        make -j
+    - name: Compile C code
+      run: make -j
+
+    - name: Run test
+      run: main 1 -1 -6 6 9 -9
