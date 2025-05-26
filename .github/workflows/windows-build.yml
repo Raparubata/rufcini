@@ -31,4 +31,4 @@ jobs:
       run: make -j
 
     - name: Run test
-      run: main 1 -1 -6 6 9 -9
+      run: ./main 1 -1 -6 6 9 -9
