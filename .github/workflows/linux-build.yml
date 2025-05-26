@@ -22,3 +22,4 @@ jobs:
     - name: Compile C code
       run: |
         make -j
+        ./main 1 -1 -6 6 9 -9
