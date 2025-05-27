@@ -1,4 +1,4 @@
-name: GCC Linux Build
+name: Linux build with GCC
 
 on:
   push:
@@ -20,5 +20,7 @@ jobs:
       run: sudo apt-get install -y build-essential
 
     - name: Compile C code
-      run: |
-        make -j
+      run: make -j
+
+    - name: Run test
+      run: ./main 1 -1 -6 6 9 -9
