@@ -13,4 +13,11 @@ typedef int16_t v16;
 typedef int32_t v32;
 typedef int64_t v64;
 
+#ifndef true
+#   define true 1
+#endif
+#ifndef false
+#   define false 0
+#endif
+
 #endif

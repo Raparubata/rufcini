@@ -8,7 +8,7 @@ v64 magic__find(term_vec_t* vec)
     v64 i = -(vec->terms[0]);
     while (true)
     {
-        if (vec->terms[0] %i == 0)
+        if (i != 0 && vec->terms[0] % i == 0)
         {
             v64 accumulator = 0;
             

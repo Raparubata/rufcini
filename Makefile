@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 R_INCLUDE_DIRS=include
 CC_FLAGS=-g -lm -I$(R_INCLUDE_DIRS)
 
