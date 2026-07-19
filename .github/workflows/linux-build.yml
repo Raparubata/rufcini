@@ -22,5 +22,5 @@ jobs:
     - name: Compile C code
       run: make -j
 
-    - name: Run test
+    - name: Run test 
       run: ./main 1 -5 1 15
